@@ -1,7 +1,10 @@
 import React from "react";
 import { FormInput } from "../form-input/form-input";
 import { CustomButton } from "../custom-button/custom-button.component";
-import { signInWithGoogle } from "../../firebase/firebase.utils";
+import {
+  signInWithGoogle,
+  signInWithUser,
+} from "../../firebase/firebase.utils";
 import "./sign-in.style.scss";
 
 export class SignIn extends React.Component {
@@ -15,13 +18,12 @@ export class SignIn extends React.Component {
 
   handleChange = ({ target }) => {
     const { type, value } = target;
-    console.log(type);
-    console.log(value);
     this.setState({ [type]: value });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
+    await signInWithUser(this.state.email, this.state.password);
     this.setState({ email: "", password: "" });
   };
 
@@ -35,13 +37,15 @@ export class SignIn extends React.Component {
             handleChange={this.handleChange}
             label={"Email"}
             value={this.state.email}
-            otherProps={{ type: "email", name: "email" }}
+            type="email"
+            name="email"
           />
           <FormInput
             handleChange={this.handleChange}
             value={this.state.password}
             label={"Password"}
-            otherProps={{ type: "password", name: "password" }}
+            type="password"
+            name="password"
           />
           <div className="buttons">
             <CustomButton type="submit">Sign in</CustomButton>

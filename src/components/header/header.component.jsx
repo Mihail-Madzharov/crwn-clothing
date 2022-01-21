@@ -16,11 +16,10 @@ export const Header = ({ currentUser }) => (
       <Link className="option" to="/shop">
         CONTACT
       </Link>
-      {currentUser ? (
+      {currentUser? (
         <div
           className="option"
           onClick={() => {
-            console.log(currentUser);
             return auth.signOut();
           }}
         >

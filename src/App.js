@@ -5,6 +5,10 @@ import { ShopPage } from "./pages/shoppage/shoppage";
 import { Header } from "./components/header/header.component";
 import { SignInAndSignUpPage } from "./pages/sign-in-sign-up/sign-in-sign-up.component";
 import { auth } from "./firebase/firebase.utils";
+import {
+  createUserProfileDocument,
+  onSnapshot,
+} from "./firebase/firebase.utils";
 import React from "react";
 
 class App extends React.Component {
@@ -17,10 +21,15 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    auth.onAuthStateChanged((user) => {
-      this.setState({
-        currentUser: user,
-      });
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const userRef = await createUserProfileDocument(user);
+        onSnapshot(userRef, (snapshot) => {
+          this.setState({
+            currentUser: { id: snapshot.id, ...snapshot.data() },
+          });
+        });
+      }
     });
   }
 
