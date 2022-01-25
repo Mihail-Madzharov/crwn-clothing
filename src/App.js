@@ -16,6 +16,7 @@ import {
 import React from "react";
 import { setCurrentUser } from "./redux/user/user.actions";
 import { Checkout } from "./pages/checkout/checkout.component";
+import { Collection } from "./pages/collection/collection.component";
 
 class App extends React.Component {
   componentDidMount() {
@@ -54,6 +55,10 @@ class App extends React.Component {
             }
           />
           <Route path="/shop" element={<ShopPage />} />
+          <Route
+            path="/collection-preview/:categoryId"
+            element={<Collection />}
+          />
         </Routes>
       </div>
     );
