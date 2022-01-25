@@ -6,6 +6,7 @@ import {
   signInWithUser,
 } from "../../firebase/firebase.utils";
 import "./sign-in.style.scss";
+import { useNavigate } from "react-router-dom";
 
 export class SignIn extends React.Component {
   constructor() {
@@ -50,7 +51,13 @@ export class SignIn extends React.Component {
           <div className="buttons">
             <CustomButton type="submit">Sign in</CustomButton>
 
-            <CustomButton onClick={() => signInWithGoogle()} isGoogleSignIn>
+            <CustomButton
+              onClick={async () => {
+                await signInWithGoogle();
+                useNavigate()("/");
+              }}
+              inverted
+            >
               SIGN IN WITH GOOGLE
             </CustomButton>
           </div>
