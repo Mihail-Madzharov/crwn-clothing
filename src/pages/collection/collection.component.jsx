@@ -10,12 +10,13 @@ const mapStateToSelectors = createStructuredSelector({
   items: selectItems,
 });
 export const Collection = connect(mapStateToSelectors)((props) => {
-  const params = useParams();
-  console.log("match", props);
-  console.log(11111);
+  // const params = useParams();
+  // console.log("match", props);
+  // console.log(11111);
   return (
     <div>
-      <div className="collection-header">
+      It works
+      {/* <div className="collection-header">
         <span>{params.categoryId}</span>
       </div>
       <div>
@@ -30,7 +31,7 @@ export const Collection = connect(mapStateToSelectors)((props) => {
             {item.name}
           </CollectionItem>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 });

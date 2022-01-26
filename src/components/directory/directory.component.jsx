@@ -9,22 +9,24 @@ const mapStateToProps = createStructuredSelector({
   sections: selectDirectorySections,
 });
 
-export const DirectoryComponent = connect(mapStateToProps)(({ sections }) => {
-  const navigate = useNavigate();
-  return (
-    <div className="directory-menu">
-      {sections.map((s) => (
-        <MenuItem
-          key={s.id}
-          title={s.title}
-          id={s.id}
-          imageUrl={s.imageUrl}
-          size={s.size}
-          onCLickHandler={() => {
-            navigate("collection-preview/" + s.title);
-          }}
-        />
-      ))}
-    </div>
-  );
-});
+export const DirectoryComponent = connect(mapStateToProps)(
+  ({ sections, match }) => {
+    const navigate = useNavigate();
+    return (
+      <div className="directory-menu">
+        {sections.map((s) => (
+          <MenuItem
+            key={s.id}
+            title={s.title}
+            id={s.id}
+            imageUrl={s.imageUrl}
+            size={s.size}
+            onCLickHandler={() => {
+              navigate("collection-preview/" + s.title, { replace: true });
+            }}
+          />
+        ))}
+      </div>
+    );
+  }
+);
