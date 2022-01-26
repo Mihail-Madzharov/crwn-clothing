@@ -1,26 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { selectItems } from "../../redux/cart/cart.selectors";
-import { CollectionItem } from "../../components/collection-item/collection-item.component";
+import { collectionSelector } from "../../redux/shop/shop.selectors";
+import { collectionSelector as activeCollection } from "../../redux/collection/collection.selectors";
+import { updateActiveCollection } from "../../redux/collection/collection.actions";
 import { createStructuredSelector } from "reselect";
+import { CollectionItem } from "../../components/collection-item/collection-item.component";
 import "./collection.style.scss";
 import { connect } from "react-redux";
 
 const mapStateToSelectors = createStructuredSelector({
-  items: selectItems,
+  items: collectionSelector,
+  activeCollection: activeCollection,
 });
-export const Collection = connect(mapStateToSelectors)((props) => {
+
+const mapDispatchToState = (dispatch) => ({
+  updateItems: (payload) => dispatch(updateActiveCollection(payload)),
+});
+
+export const Collection = connect(
+  mapStateToSelectors,
+  mapDispatchToState
+)(({ items, updateItems, activeCollection }) => {
   const params = useParams();
-  console.log("match", props);
-  console.log(11111);
+  useEffect(() => {
+    updateItems(
+      items.find((item) => item.routeName === params.categoryId).items
+    );
+  });
+
   return (
     <div>
       <div className="collection-header">
         <span>{params.categoryId}</span>
       </div>
-      <div>
-        {params.items.map((item) => (
+      <div className="collection-wrapper">
+        {activeCollection.map((item) => (
           <CollectionItem
+            className="collection-item"
             key={item.id}
             name={item.name}
             id={item.id}

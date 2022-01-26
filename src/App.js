@@ -20,7 +20,7 @@ import { Collection } from "./pages/collection/collection.component";
 
 class App extends React.Component {
   componentDidMount() {
-    const { setCurrentUser, user } = this.props;
+    const { setCurrentUser } = this.props;
 
     auth.onAuthStateChanged(async (user) => {
       if (user) {
